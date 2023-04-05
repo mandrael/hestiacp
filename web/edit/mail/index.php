@@ -1072,11 +1072,58 @@ if (!empty($_POST["save"]) && !empty($_GET["domain"]) && !empty($_GET["account"]
 	// Email login credentials
 	if (!empty($v_send_email) && empty($_SESSION["error_msg"])) {
 		$to = $v_send_email;
-		$subject = _("Email Credentials");
+		$subject = sprintf(
+			_("Email Credentials %s@%s"),
+			htmlentities(strtolower($_POST["v_account"])),
+			htmlentities($_POST["v_domain"]),
+		);
 		$hostname = get_hostname();
-		$from = "noreply@" . $hostname;
-		$from_name = _("Hestia Control Panel");
-		$mailtext = $v_credentials;
+		$hostname = get_hostname();
+
+		$_POST["v_password"] = empty($_POST["v_password"])
+			? _("Your password has not been changed")
+			: $_POST["v_password"];
+		$from = !empty($_SESSION["FROM_EMAIL"]) ? $_SESSION["FROM_EMAIL"] : "noreply@" . $hostname;
+		$from_name = !empty($_SESSION["FROM_NAME"])
+			? $_SESSION["FROM_NAME"]
+			: $_SESSION["APP_NAME"];
+
+		$mailtext = sprintf(
+			"Mail account has been created\n" .
+				"\n" .
+				"Common account settings:\n" .
+				"Username: %s@%s\n" .
+				"Password: %s\n" .
+				"Webmail: %s\n" .
+				"Hostname: %s\n" .
+				"\n" .
+				"IMAP settings\n" .
+				"Authentication: Normal Password\n" .
+				"SSL/TLS: Port 993\n" .
+				"STARTTLS: Port 143\n" .
+				"No encryption: Port 143\n" .
+				"\n" .
+				"POP3 settings\n" .
+				"Authentication: Normal Password\n" .
+				"SSL/TLS: Port 995\n" .
+				"STARTTLS: Port 110\n" .
+				"No encryption: Port 110\n" .
+				"\n" .
+				"SMTP settings\n" .
+				"Authentication: Normal Password\n" .
+				"SSL/TLS: Port 465\n" .
+				"STARTTLS: Port 587\n" .
+				"No encryption: Port 25\n" .
+				"\n" .
+				"--\n" .
+				"%s",
+			htmlentities(strtolower($_POST["v_account"])),
+			htmlentities($_POST["v_domain"]),
+			htmlentities($_POST["v_password"]),
+			$webmail . "." . htmlentities($_POST["v_domain"]),
+			"mail." . htmlentities($_POST["v_domain"]),
+			$_SESSION["APP_NAME"],
+		);
 		send_email($to, $subject, $mailtext, $from, $from_name);
 	}
 

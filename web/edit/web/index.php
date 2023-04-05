@@ -1213,14 +1213,27 @@ if (!empty($_POST["save"])) {
 						$to = $v_ftp_user_data["v_ftp_email"];
 						$subject = _("FTP login credentials");
 						$hostname = get_hostname();
-						$from = "noreply@" . $hostname;
-						$from_name = _("Hestia Control Panel");
+						$from = !empty($_SESSION["FROM_EMAIL"])
+							? $_SESSION["FROM_EMAIL"]
+							: "noreply@" . $hostname;
+						$from_name = !empty($_SESSION["FROM_NAME"])
+							? $_SESSION["FROM_NAME"]
+							: $_SESSION["APP_NAME"];
 						$mailtext = sprintf(
-							_("FTP_ACCOUNT_READY"),
+							_(
+								"FTP account has been created and is ready for use.\n" .
+									"Hostname: %s\n" .
+									"Username: %s_%s\n" .
+									"Password: %s\n" .
+									"\n" .
+									"--\n" .
+									"%s",
+							),
 							$v_domain,
 							$user_plain,
-							$v_ftp_username,
+							$v_ftp_username_for_emailing,
 							$v_ftp_user_data["v_ftp_password"],
+							$_SESSION["APP_NAME"],
 						);
 						send_email($to, $subject, $mailtext, $from, $from_name);
 						unset($v_ftp_email);
@@ -1330,14 +1343,27 @@ if (!empty($_POST["save"])) {
 					$to = $v_ftp_user_data["v_ftp_email"];
 					$subject = _("FTP login credentials");
 					$hostname = get_hostname();
-					$from = "noreply@" . $hostname;
-					$from_name = _("Hestia Control Panel");
+					$from = !empty($_SESSION["FROM_EMAIL"])
+						? $_SESSION["FROM_EMAIL"]
+						: "noreply@" . $hostname;
+					$from_name = !empty($_SESSION["FROM_NAME"])
+						? $_SESSION["FROM_NAME"]
+						: $_SESSION["APP_NAME"];
 					$mailtext = sprintf(
-						_("FTP_ACCOUNT_READY"),
+						_(
+							"FTP account has been created and is ready for use.\n" .
+								"Hostname: %s\n" .
+								"Username: %s_%s\n" .
+								"Password: %s\n" .
+								"\n" .
+								"--\n" .
+								"%s",
+						),
 						$v_domain,
 						$user_plain,
 						$v_ftp_username_for_emailing,
 						$v_ftp_user_data["v_ftp_password"],
+						$_SESSION["APP_NAME"],
 					);
 					send_email($to, $subject, $mailtext, $from, $from_name);
 					unset($v_ftp_email);

@@ -6,7 +6,7 @@
 		<input type="hidden" name="token" value="<?= $_SESSION["token"] ?>">
 		<input type="hidden" name="murmur" value="" id="murmur">
 		<h1 class="login-title">
-			<?= _("Welcome to Hestia Control Panel") ?>
+			<?= sprintf(_("Welcome to %s"),htmlentities($_SESSION['APP_NAME'])) ?>
 		</h1>
 		<?php show_error_message($error); ?>
 		<div class="u-mb20">

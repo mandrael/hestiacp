@@ -5,10 +5,10 @@
 	<?php if ($success) { ?>
 		<div>
 			<h1 class="login-title">
-				<?= _("2FA Reset successfully") ?>
+				<?= _("Account has been successfully unlocked") ?>
 			</h1>
-			<?php show_error_message($ERROR); ?>
 			<div class="u-mt20">
+				<p><?_("Two-factor authentication is now turned off for your account.<br><br>You may now proceed to log in.");?></p>
 				<button type="button" class="button button-secondary" onclick="location.href='/login/'">
 					<?= _("Log in") ?>
 				</button>
@@ -18,9 +18,9 @@
 		<form method="post" action="/reset2fa/">
 			<input type="hidden" name="token" value="<?= $_SESSION["token"] ?>">
 			<h1 class="login-title">
-				<?= _("Reset 2FA") ?>
+				<?= _("Unlock Account") ?>
 			</h1>
-			<?php show_error_message($ERROR); ?>
+			<?php if(!empty($error){ show_error_message($error);} ?>
 			<div class="u-mb10">
 				<label for="user" class="form-label"><?= _("Username") ?></label>
 				<input type="text" class="form-control" name="user" id="user" required>

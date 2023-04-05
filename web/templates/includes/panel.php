@@ -9,8 +9,8 @@
 			<div class="top-bar-left">
 
 				<!-- Logo / Home Button -->
-				<a href="<?= htmlspecialchars($home_url) ?>" class="top-bar-logo" title="<?= _("Hestia Control Panel") ?>">
-					<img src="/images/logo-header.svg" alt="<?= _("Hestia Control Panel") ?>" width="54" height="29">
+				<a href="/" class="top-bar-logo" title="<?= htmlentities($_SESSION['APP_NAME']);?>">
+					<img src="<?php if ( !empty($_SESSION['LOGO_HEADER'])){ echo $_SESSION['LOGO_HEADER']; }else{ echo "/images/logo-header.svg"; } ?>" alt="<?= htmlentities($_SESSION['APP_NAME']);?>" width="54" height="29">
 				</a>
 
 				<!-- Usage Statistics -->
@@ -187,15 +187,16 @@
 								<span class="top-bar-menu-link-label u-hide-desktop"><?= _("Statistics") ?></span>
 							</a>
 						</li>
-
-						<!-- Help / Documentation -->
-						<li class="top-bar-menu-item">
-							<a title="<?= _("Help") ?>" class="top-bar-menu-link" href="https://hestiacp.com/docs/server-administration/troubleshooting.html" target="_blank" rel="noopener">
-								<i class="fas fa-circle-question"></i>
-								<span class="top-bar-menu-link-label u-hide-desktop"><?= _("Help") ?></span>
-							</a>
-						</li>
-
+						<?php if ( $_SESSION['HIDE_DOCS'] != 'yes'){
+						?>
+							<!-- Help / Documentation -->
+							<li class="top-bar-menu-item">
+								<a title="<?= _("Help") ?>" class="top-bar-menu-link" href="https://hestiacp.com/docs/server-administration/troubleshooting.html" target="_blank" rel="noopener">
+									<i class="fas fa-circle-question"></i>
+									<span class="top-bar-menu-link-label u-hide-desktop"><?= _("Help") ?></span>
+								</a>
+							</li>
+						<?php } ?>
 						<!-- Logout -->
 						<?php if (isset($_SESSION["look"]) && !empty($_SESSION["look"])) { ?>
 							<li class="top-bar-menu-item">

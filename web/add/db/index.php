@@ -111,52 +111,65 @@ if (!empty($_POST["ok"])) {
 			$db_admin = "phpMyAdmin";
 		}
 		if ($_POST["v_type"] == "mysql") {
-			$db_admin_link = "http://" . $http_host . "/phpmyadmin/";
+			$db_admin_link = "https://" . $http_host . "/phpmyadmin/";
 		}
 		if ($_POST["v_type"] == "mysql" && !empty($_SESSION["DB_PMA_ALIAS"])) {
-			$db_admin_link = "http://" . $http_host . "/" . $_SESSION["DB_PMA_ALIAS"];
+			$db_admin_link = "https://" . $http_host . "/" . $_SESSION["DB_PMA_ALIAS"];
 		}
 		if ($_POST["v_type"] == "pgsql") {
 			$db_admin = "phpPgAdmin";
 		}
 		if ($_POST["v_type"] == "pgsql") {
-			$db_admin_link = "http://" . $http_host . "/phppgadmin/";
+			$db_admin_link = "https://" . $http_host . "/phppgadmin/";
 		}
 		if ($_POST["v_type"] == "pgsql" && !empty($_SESSION["DB_PGA_ALIAS"])) {
-			$db_admin_link = "http://" . $http_host . "/" . $_SESSION["DB_PGA_ALIAS"];
+			$db_admin_link = "https://" . $http_host . "/" . $_SESSION["DB_PGA_ALIAS"];
 		}
 	}
 
 	// Email login credentials
 	if (!empty($v_db_email) && empty($_SESSION["error_msg"])) {
 		$to = $v_db_email;
-		$subject = _("Database Credentials");
+		$subject = sprintf(_("Database Credentials"), $user_plain . "_" . $_POST["v_database"]);
 		$hostname = get_hostname();
-		$from = "noreply@" . $hostname;
-		$from_name = _("Hestia Control Panel");
+		$from = !empty($_SESSION["FROM_EMAIL"]) ? $_SESSION["FROM_EMAIL"] : "noreply@" . $hostname;
+		$from_name = !empty($_SESSION["FROM_NAME"])
+			? $_SESSION["FROM_NAME"]
+			: $_SESSION["APP_NAME"];
 		$mailtext = sprintf(
-			_("DATABASE_READY"),
+			_(
+				"Database has been created successfully\n" .
+					"Database: %s\n" .
+					"User: %s\n" .
+					"Password: %s\n" .
+					"%s\n" .
+					"%s",
+			),
 			$user_plain . "_" . $_POST["v_database"],
 			$user_plain . "_" . $_POST["v_dbuser"],
 			$_POST["v_password"],
 			$db_admin_link,
+			$_SESSION["APP_NAME"],
 		);
 		send_email($to, $subject, $mailtext, $from, $from_name);
 	}
 
 	// Flush field values on success
 	if (empty($_SESSION["error_msg"])) {
-		$_SESSION["ok_msg"] = sprintf(
-			_("DATABASE_CREATED_OK"),
-			htmlentities($user_plain) . "_" . htmlentities($_POST["v_database"]),
-			htmlentities($user_plain) . "_" . htmlentities($_POST["v_database"]),
+		$_SESSION["ok_msg"] = htmlify_trans(
+			sprintf(
+				_("Database {%s} has been created successfully / {open %s}"),
+				htmlentities($user_plain) . "_" . htmlentities($_POST["v_database"]),
+				htmlentities($user_plain) . "_" . htmlentities($_POST["v_database"]),
+			),
+			"</b></a>",
+			'<a href="/edit/db/?database=' .
+				htmlentities($user_plain) .
+				"_" .
+				htmlentities($_POST["v_database"]) .
+				'"><b>',
+			'<a href="' . $db_admin_link . '" target="_blank"><b>',
 		);
-		$_SESSION["ok_msg"] .=
-			" / <a href=" .
-			$db_admin_link .
-			" target='_blank'>" .
-			sprintf(_("open %s"), $db_admin) .
-			"</a>";
 		unset($v_database);
 		unset($v_dbuser);
 		unset($v_password);
@@ -187,6 +200,8 @@ $db_hosts = array_values(array_unique($db_hosts_tmp2));
 unset($output);
 unset($db_hosts_tmp1);
 unset($db_hosts_tmp2);
+
+$accept = $_GET["accept"] ?? "";
 
 render_page($user, $TAB, "add_db");
 

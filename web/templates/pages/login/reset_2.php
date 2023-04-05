@@ -6,9 +6,9 @@
 		<h1 class="login-title">
 			<?= _("Forgot Password") ?>
 		</h1>
-		<?php show_error_message($ERROR); ?>
+		<?php if(!empty($error){ show_error_message($error); }?>
 		<p class="inline-success u-mb10">
-			<?= _("RESET_CODE_SENT") ?>
+			<?= _("Password reset code has been sent to your email address") ?>
 		</p>
 		<div class="u-mb20">
 			<input type="hidden" name="action" value="confirm">

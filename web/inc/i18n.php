@@ -36,6 +36,22 @@ function translate_json($string) {
 	return $json_a[$string][0] . " (" . $json_a[$string . "_locale"][0] . ")";
 }
 /**
+ * Support translation strings that contains html
+ */
+function htmlify_trans($string, $closingTag) {
+	$arguments = func_get_args();
+	return preg_replace_callback(
+		"/{(.*?)}/", // Ungreedy (*?)
+		function ($matches) use ($arguments, $closingTag) {
+			static $i = 1;
+			$i++;
+			return $arguments[$i] . $matches[1] . $closingTag;
+		},
+		$string,
+	);
+}
+
+/**
  * Detects user language .
  * @param string Fallback language (default: 'en')
  * @return string Language code (such as 'en' and 'ja')

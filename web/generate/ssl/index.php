@@ -127,7 +127,7 @@ if ($return_var != 0) {
 }
 
 // OK message
-$_SESSION["ok_msg"] = _("SSL_GENERATED_OK");
+$_SESSION["ok_msg"] = _("Certificate has been generated successfully.");
 
 // Parse output
 $data = json_decode(implode("", $output), true);

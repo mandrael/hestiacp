@@ -79,7 +79,7 @@
 								</div>
 								<div class="u-pt10">
 									<button type="button" class="button button-secondary js-generate-cron">
-										<?= _("generate") ?>
+										<?= _("Generate") ?>
 									</button>
 								</div>
 							</fieldset>
@@ -109,7 +109,7 @@
 								</div>
 								<div class="u-pt10">
 									<button type="button" class="button button-secondary js-generate-cron">
-										<?= _("generate") ?>
+										<?= _("Generate") ?>
 									</button>
 								</div>
 							</fieldset>

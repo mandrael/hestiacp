@@ -47,7 +47,7 @@ if (!empty($_POST["user"]) && empty($_POST["code"])) {
 				$name = $data[$user]["NAME"];
 				$contact = $data[$user]["CONTACT"];
 				$to = $data[$user]["CONTACT"];
-				$subject = sprintf(_("MAIL_RESET_SUBJECT"), date("Y-m-d H:i:s"));
+				$subject = sprintf(_("Password Reset at %s"), date("Y-m-d H:i:s"));
 				$hostname = get_hostname();
 				if ($hostname . ":" . $_SERVER["SERVER_PORT"] == $_SERVER["HTTP_HOST"]) {
 					$check = true;
@@ -57,36 +57,45 @@ if (!empty($_POST["user"]) && empty($_POST["code"])) {
 					$hostname_email = $hostname_full;
 				} else {
 					$check = false;
-					$ERROR = "<p class=\"error\">" . _("Invalid host domain") . "</p>";
+					$error = "<p class=\"error\">" . _("Invalid host domain") . "</p>";
 				}
 				if ($check == true) {
-					$from = "noreply@" . $hostname;
-					$from_name = _("Hestia Control Panel");
+					$from = !empty($_SESSION["FROM_EMAIL"])
+						? $_SESSION["FROM_EMAIL"]
+						: "noreply@" . $hostname;
+					$from_name = !empty($_SESSION["FROM_NAME"])
+						? $_SESSION["FROM_NAME"]
+						: $_SESSION["APP_NAME"];
 					if (!empty($name)) {
-						$mailtext = sprintf(_("GREETINGS_GORDON"), $name);
+						$mailtext = sprintf(_("Hello %s,"), $name);
 					} else {
-						$mailtext = _("GREETINGS");
+						$mailtext = _("Hello,");
 					}
 					$mailtext .= sprintf(
-						_("PASSWORD_RESET_REQUEST"),
+						_(
+							"To reset your Hestia Control Panel password, please follow this link:\n" .
+								"https://%s/reset/?action=confirm&user=%s&code=%s\n" .
+								"\n" .
+								"Alternatively, you may go to https://%s/reset/?action=code&user=%s and enter the following reset code:\n" .
+								"%s\n" .
+								"\n" .
+								"If you did not request password reset, please ignore this message and accept our apologies.\n" .
+								"\n" .
+								"--\n" .
+								"%s",
+						),
 						$_SERVER["HTTP_HOST"],
 						$user,
 						$rkey,
 						$_SERVER["HTTP_HOST"],
 						$user,
 						$rkey,
+						$_SESSION["APP_NAME"],
 					);
-					if (!empty($rkey)) {
-						send_email(
-							$to,
-							$subject,
-							$mailtext,
-							$from,
-							$from_name,
-							$data[$user]["NAME"],
-						);
-					}
-					$ERROR =
+
+					send_email($to, $subject, $mailtext, $from, $from_name, $data[$user]["NAME"]);
+
+					$error =
 						"<p class=\"error\">" .
 						_(
 							"Password reset instructions have been sent to the email address associated with this account.",
@@ -95,7 +104,7 @@ if (!empty($_POST["user"]) && empty($_POST["code"])) {
 				}
 			} else {
 				# Prevent user enumeration and let hackers guess username and working email
-				$ERROR =
+				$error =
 					"<p class=\"error\">" .
 					_(
 						"Password reset instructions have been sent to the email address associated with this account.",
@@ -103,14 +112,14 @@ if (!empty($_POST["user"]) && empty($_POST["code"])) {
 					"</p>";
 			}
 		} else {
-			$ERROR =
+			$error =
 				"<p class=\"error\">" .
 				_("Please wait 15 minutes before sending a new request") .
 				"</p>";
 		}
 	} else {
 		# Prevent user enumeration and let hackers guess username and working email
-		$ERROR =
+		$error =
 			"<p class=\"error\">" .
 			_(
 				"Password reset instructions have been sent to the email address associated with this account.",
@@ -190,10 +199,10 @@ if (!empty($_POST["user"]) && !empty($_POST["code"]) && !empty($_POST["password"
 			}
 		} else {
 			sleep(5);
-			$ERROR = "<p class=\"error\">" . _("Invalid username or code") . "</p>";
+			$error = "<p class=\"error\">" . _("Invalid username or code") . "</p>";
 		}
 	} else {
-		$ERROR = "<p class=\"error\">" . _("Passwords not match") . "</p>";
+		$error = "<p class=\"error\">" . _("Passwords not match") . "</p>";
 	}
 }
 

@@ -5,9 +5,9 @@
 			<?php if ($read_only !== "true") { ?>
 				<a href="/add/cron/" class="button button-secondary" id="btn-create"><i class="fas fa-circle-plus icon-green"></i><?= _("Add Cron Job") ?></a>
 				<?php if ($panel[$user_plain]["CRON_REPORTS"] == "yes") { ?>
-					<a class="button button-secondary" href="/delete/cron/reports/?token=<?= $_SESSION["token"] ?>"><i class="fas fa-toggle-off icon-green"></i><?= _("turn off notifications") ?></a>
+					<a class="button button-secondary" href="/delete/cron/reports/?token=<?= $_SESSION["token"] ?>"><i class="fas fa-toggle-off icon-green"></i><?= _("Turn off notifications") ?></a>
 				<?php } else { ?>
-					<a class="button button-secondary" href="/add/cron/reports/?token=<?= $_SESSION["token"] ?>"><i class="fas fa-toggle-off"></i><?= _("turn on notifications") ?></a>
+					<a class="button button-secondary" href="/add/cron/reports/?token=<?= $_SESSION["token"] ?>"><i class="fas fa-toggle-off"></i><?= _("Turn on notifications") ?></a>
 				<?php } ?>
 			<?php } ?>
 		</div>
@@ -28,12 +28,12 @@
 					<form x-data x-bind="BulkEdit" action="/bulk/cron/" method="post">
 						<input type="hidden" name="token" value="<?= $_SESSION["token"] ?>">
 						<select class="form-select" name="action">
-							<option value=""><?= _("apply to selected") ?></option>
-							<?php if($panel[$user_plain]['CRON_REPORTS'] == 'yes') echo '<option value="delete-cron-reports">'._('turn off notifications').'</option>'; ?>
-							<?php if($panel[$user_plain]['CRON_REPORTS'] == 'no') echo '<option value="add-cron-reports">'._('turn on notifications').'</option>'; ?>
-							<option value="suspend"><?= _("suspend") ?></option>
-							<option value="unsuspend"><?= _("unsuspend") ?></option>
-							<option value="delete"><?= _("delete") ?></option>
+							<option value=""><?= _("Apply to selected") ?></option>
+							<?php if($panel[$user_plain]['CRON_REPORTS'] == 'yes') echo '<option value="delete-cron-reports">'._('Turn off notifications').'</option>'; ?>
+							<?php if($panel[$user_plain]['CRON_REPORTS'] == 'no') echo '<option value="add-cron-reports">'._('Turn on notifications').'</option>'; ?>
+							<option value="suspend"><?= _("Suspend") ?></option>
+							<option value="unsuspend"><?= _("Unsuspend") ?></option>
+							<option value="delete"><?= _("Delete") ?></option>
 						</select>
 						<button type="submit" class="toolbar-input-submit" title="<?= _("apply to selected") ?>">
 							<i class="fas fa-arrow-right"></i>
@@ -79,12 +79,12 @@
 				$status = 'suspended';
 				$spnd_action = 'unsuspend';
 				$spnd_icon = 'fa-play';
-				$spnd_confirmation = _('UNSUSPEND_CRON_CONFIRMATION') ;
+				$spnd_confirmation = _('Are you sure you want to unsuspend cron job?') ;
 			} else {
 				$status = 'active';
 				$spnd_action = 'suspend';
 				$spnd_icon = 'fa-pause';
-				$spnd_confirmation = _('SUSPEND_CRON_CONFIRMATION') ;
+				$spnd_confirmation = _('Are you sure you want to suspend cron job?') ;
 			}
 		?>
 		<div class="l-unit <?php if($status == 'suspended') echo 'l-unit--suspended'; ?> animate__animated animate__fadeIn" v_unit_id="<?=$key?>" v_section="cron"
@@ -126,7 +126,7 @@
 										class="data-controls js-confirm-action"
 										href="/delete/cron/?job=<?= $data[$key]["JOB"] ?>&token=<?= $_SESSION["token"] ?>"
 										data-confirm-title="<?= _("Delete") ?>"
-										data-confirm-message="<?= sprintf(_("DELETE_CRON_CONFIRMATION"), $key) ?>"
+										data-confirm-message="<?= sprintf(_("Are you sure you want to delete cron job?"), $key) ?>"
 									>
 										<i class="fas fa-trash icon-red icon-dim"></i>
 									</a>

@@ -59,14 +59,12 @@ $(document).ready(function () {
 
 	$('input[name=v_account]').change(function () {
 		$('.js-account-output').text($(this).val());
-		generate_mail_credentials();
 	});
 
 	$('.js-password-input').change(function () {
 		if ($('.js-password-input').attr('type') == 'text')
 			$('.js-password-output').text($(this).val());
 		else $('.js-password-output').text(Array($(this).val().length + 1).join('*'));
-		generate_mail_credentials();
 	});
 
 	$('.toggle-psw-visibility-icon').click(function () {
@@ -104,6 +102,5 @@ $(document).ready(function () {
 				$('#td_smtp_encryption').text(opt.attr('no_encryption'));
 				break;
 		}
-		generate_mail_credentials();
 	});
 });
