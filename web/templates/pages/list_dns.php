@@ -58,7 +58,7 @@
 	<div class="header table-header">
 		<div class="l-unit__col l-unit__col--right">
 			<div class="clearfix l-unit__stat-col--left super-compact">
-				<input type="checkbox" class="js-toggle-all" title="<?= _("Select all") ?>" <?= $display_mode ?>>
+				<input type="checkbox" class="js-toggle-all" title="<?= _("Select all") ?>" <?= $display_mode; ?>>
 			</div>
 			<div class="clearfix l-unit__stat-col--left wide-3"><b><?= _("Name") ?></b></div>
 			<div class="clearfix l-unit__stat-col--left u-text-right"><b>&nbsp;</b></div>
@@ -85,10 +85,11 @@
 				$spnd_action = 'suspend';
 				$spnd_icon = 'fa-pause';
 				$spnd_confirmation = _('Are you sure you want to suspend domain %s?');
-			if ($data[$key]['DNSSEC'] !== 'yes') {
-				$dnssec_icon = 'fa-circle-xmark';
-			} else {
-				$dnssec_icon = 'fa-circle-check';
+				if ($data[$key]['DNSSEC'] !== 'yes') {
+					$dnssec_icon = 'fa-circle-xmark';
+				} else {
+					$dnssec_icon = 'fa-circle-check';
+				}
 			}
 		?>
 		<div class="l-unit <?php if ($status == 'suspended') echo ' l-unit--suspended'; ?> animate__animated animate__fadeIn" v_unit_id="<?=htmlentities($key);?>"
@@ -132,7 +133,7 @@
 										class="data-controls js-confirm-action"
 										href="/delete/dns/?domain=<?= htmlentities($key) ?>&token=<?= $_SESSION["token"] ?>"
 										data-confirm-title="<?= _("Delete") ?>"
-										data-confirm-message="<?= sprintf(_("Are you sure you want to delete domain %s?"), $key) ?>"
+										data-confirm-message="<?= sprintf(_("Are you sure you want to delete domain %s?"), $key);?>"
 									>
 										<i class="fas fa-trash icon-red icon-dim"></i>
 									</a>
