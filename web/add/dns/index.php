@@ -194,12 +194,6 @@ if (!empty($_POST["ok"])) {
 
 	// Flush field values on success
 	if (empty($_SESSION["error_msg"])) {
-		$_SESSION["ok_msg"] = sprintf(
-			_("DNS_DOMAIN_CREATED_OK"),
-			htmlentities($_POST["v_domain"]),
-			htmlentities($_POST["v_domain"]),
-		);
-
 		$_SESSION["ok_msg"] = htmlify_trans(
 			sprintf(
 				_("DNS domain {%s} has been created successfully"),

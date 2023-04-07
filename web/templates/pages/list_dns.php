@@ -28,13 +28,13 @@
 						<select class="form-select" name="action">
 							<option value=""><?= _("apply to selected") ?></option>
 							<?php if ($_SESSION["userContext"] === "admin") { ?>
-								<option value="rebuild"><?= _("rebuild") ?></option>
+								<option value="rebuild"><?= _("Rebuild") ?></option>
 							<?php } ?>
-							<option value="suspend"><?= _("suspend") ?></option>
-							<option value="unsuspend"><?= _("unsuspend") ?></option>
-							<option value="delete"><?= _("delete") ?></option>
+							<option value="suspend"><?= _("Suspend") ?></option>
+							<option value="unsuspend"><?= _("Unsuspend") ?></option>
+							<option value="delete"><?= _("Delete") ?></option>
 						</select>
-						<button type="submit" class="toolbar-input-submit" title="<?= _("apply to selected") ?>">
+						<button type="submit" class="toolbar-input-submit" title="<?= _("Apply to selected") ?>">
 							<i class="fas fa-arrow-right"></i>
 						</button>
 					</form>
@@ -79,13 +79,12 @@
 				$status = 'suspended';
 				$spnd_action = 'unsuspend';
 				$spnd_icon = 'fa-play';
-				$spnd_confirmation = _('UNSUSPEND_DOMAIN_CONFIRMATION');
+				$spnd_confirmation = _('Are you sure you want to unsuspend domain %s?');
 			} else {
 				$status = 'active';
 				$spnd_action = 'suspend';
 				$spnd_icon = 'fa-pause';
-				$spnd_confirmation = _('SUSPEND_DOMAIN_CONFIRMATION');
-			}
+				$spnd_confirmation = _('Are you sure you want to suspend domain %s?');
 			if ($data[$key]['DNSSEC'] !== 'yes') {
 				$dnssec_icon = 'fa-circle-xmark';
 			} else {
@@ -133,7 +132,7 @@
 										class="data-controls js-confirm-action"
 										href="/delete/dns/?domain=<?= htmlentities($key) ?>&token=<?= $_SESSION["token"] ?>"
 										data-confirm-title="<?= _("Delete") ?>"
-										data-confirm-message="<?= sprintf(_("DELETE_DOMAIN_CONFIRMATION"), $key) ?>"
+										data-confirm-message="<?= sprintf(_("Are you sure you want to delete domain %s?"), $key) ?>"
 									>
 										<i class="fas fa-trash icon-red icon-dim"></i>
 									</a>

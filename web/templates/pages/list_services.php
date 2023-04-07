@@ -163,7 +163,7 @@
 									class="data-controls js-confirm-action"
 									href="/<?=$action ?>/service/?srv=<?=$key?>&token=<?=$_SESSION['token']?>"
 									data-confirm-title="<?= _($action) ?>"
-									data-confirm-message="<?php if($action == 'stop'){ echo sprintf(_('Are you sure you want to stop service'),$key); }else{ echo sprintf(_('Are you sure you want to start service'),$key); }?>"
+									data-confirm-message="<?php if($action == 'stop'){ echo sprintf(_('Are you sure you want to stop service %s?'),$key); }else{ echo sprintf(_('Are you sure you want to start service %s?'),$key); }?>"
 								>
 									<i class="fas <?= $spnd_icon ?> icon-red icon-dim"></i>
 								</a>

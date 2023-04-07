@@ -29,8 +29,8 @@
 			DB_USER_PREFIX: '<?= $user_plain ?>_',
 			DB_DBNAME_PREFIX: '<?= $user_plain ?>_',
 			UNLIM_VALUE: 'unlimited',
-			UNLIM_TRANSLATED_VALUE: '<?= _("unlimited") ?>',
-			NOTIFICATIONS_EMPTY: '<?= _("no notifications") ?>',
+			UNLIM_TRANSLATED_VALUE: '<?= _("Unlimited") ?>',
+			NOTIFICATIONS_EMPTY: '<?= _("No notifications") ?>',
 			NOTIFICATIONS_DELETE_ALL: '<?= _("Delete all notifications") ?>',
 			CONFIRM_LEAVE_PAGE: '<?= _("LEAVE_PAGE_CONFIRMATION") ?>',
 			isUnlimitedValue(value) {
