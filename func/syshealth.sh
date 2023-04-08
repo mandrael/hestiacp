@@ -487,6 +487,18 @@ function syshealth_repair_system_config() {
 		echo "[ ! ] Adding missing variable to hestia.conf: APP_NAME ('Hestia Control Panel')"
 		$BIN/v-change-sys-config-value "APP_NAME" "Hestia Control Panel"
 	fi
+	if [[ -z $(check_key_exists 'LOGO_HEADER') ]]; then
+		echo "[ ! ] Adding missing variable to hestia.conf: LOGO_HEADER ('')"
+		$BIN/v-change-sys-config-value "LOGO_HEADER" ""
+	fi
+	if [[ -z $(check_key_exists 'LOGO_LOGIN') ]]; then
+		echo "[ ! ] Adding missing variable to hestia.conf: LOGO_LOGIN ('')"
+		$BIN/v-change-sys-config-value "LOGO_LOGIN" ""
+	fi
+	if [[ -z $(check_key_exists 'LOGO_FAVICON') ]]; then
+		echo "[ ! ] Adding missing variable to hestia.conf: LOGO_FAVICON ('')"
+		$BIN/v-change-sys-config-value "LOGO_FAVICON" ""
+	fi
 	if [[ -z $(check_key_exists 'FROM_NAME') ]]; then
 		# Default is always APP_NAME
 		echo "[ ! ] Adding missing variable to hestia.conf: FROM_NAME ('')"
