@@ -108,6 +108,8 @@ json_list() {
 		"FROM_EMAIL": "'$FROM_EMAIL'",
 		"APP_NAME": "'$APP_NAME'",
 		"LOGO_HEADER": "'$LOGO_HEADER'",
+		"LOGO_LOGIN": "'$LOGO_LOGIN'",
+		"LOGO_FAVICON": "'$LOGO_FAVICON'",
 		"HIDE_DOCS": "'$HIDE_DOCS'"
     }
     }'

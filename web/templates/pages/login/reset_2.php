@@ -1,6 +1,6 @@
 <div class="login animate__animated animate__zoomIn">
 	<a href="/" class="u-block u-mb40">
-		<img src="/images/logo.svg" alt="<?= _("Hestia Control Panel") ?>" width="100" height="120">
+		<img src="<?php if ( !empty($_SESSION['LOGO_LOGIN'])){ echo $_SESSION['LOGO_LOGIN']; } else{ echo "/images/logo.svg"; } ?>" alt="<?=htmlentities($_SESSION['APP_NAME']);?>" width="100" height="120">
 	</a>
 	<form method="get" action="/reset/">
 		<h1 class="login-title">
