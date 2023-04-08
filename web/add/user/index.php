@@ -176,7 +176,7 @@ if (!empty($_POST["ok"])) {
 	if (empty($_SESSION["error_msg"])) {
 		$_SESSION["ok_msg"] = htmlify_trans(
 			sprintf(
-				_("User {%s}</a> has been created successfully. / {login as %s}"),
+				_("User {%s} has been created successfully. / {login as %s}"),
 				htmlentities($_POST["v_username"]),
 				htmlentities($_POST["v_username"]),
 			),
@@ -185,8 +185,8 @@ if (!empty($_POST["ok"])) {
 			'<a href="/login/?loginas=' .
 				htmlentities($_POST["v_username"]) .
 				"&token=" .
-				htmlentities($_SESSION["token"]),
-			"><b>",
+				htmlentities($_SESSION["token"]) .
+				'"><b>',
 		);
 		unset($v_username);
 		unset($v_password);
